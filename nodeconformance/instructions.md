@@ -15,10 +15,10 @@ KubeEdge has provided the docker image of the node conformance test, which conta
 
 ### Launch the conformance test container
 
-Pull node conformance test image `kubeedge/nodeconformance` 
+Pull node conformance test image `kubeedge/nodeconformance:v1.23.1`
 
 ```
-$ docker pull kubeedge/nodeconformance
+$ docker pull kubeedge/nodeconformance:v1.23.1
 ```
 
 Or build the image locally.
@@ -32,7 +32,7 @@ $ docker build -t {image_name}:{tag_name} -f build/conformance/nodeconformance.D
 Examples of running the conformance test containers:
 
 ```
-docker run --env KUBECONFIG=/root/.kube/config  --env RESULTS_DIR=/tmp/results -v /root/.kube/config:/root/.kube/config -v /tmp/results:/tmp/results --network host -it kubeedge/nodeconformance
+docker run --env KUBECONFIG=/root/.kube/config  --env RESULTS_DIR=/tmp/results -v /root/.kube/config:/root/.kube/config -v /tmp/results:/tmp/results --network host -it kubeedge/nodeconformance:v1.23.1
 ```
 
 Description of container environment variables:
@@ -40,6 +40,7 @@ Description of container environment variables:
 | Environment variables | The corresponding ginkgo parameters | Parameters description                                                                                                          |
 |-----------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | E2E_DRYRUN            | dryRun                              | If set, ginkgo will walk the test hierarchy without actually running anything. Best paired with -v.                             |
+| E2E_PARALLEL          | p                                   | If set, its value is passed to ginkgo to enable parallel test execution, for example `-p`.                                      |
 | E2E_SKIP              | skip                                | If set, ginkgo will only run specs that do not match this regular expression. Can be specified multiple times, values are ORed. |
 | E2E_FOCUS             | focus                               | If set, ginkgo will only run specs that match this regular expression. Can be specified multiple times, values are ORed.        |
 | RESULTS_DIR           | NA                                  | Output report path, default /tmp/results                                                                                        |
@@ -65,8 +66,8 @@ If submitting test results for multiple versions, submit a PR for each product, 
 
 ```
 vX.Y/$dir/README.md: A script or human-readable description of how to reproduce your results.
-vX.Y/$dir/e2e.log: Test log output (from the container kubeedge/nodeconformance).
-vX.Y/$dir/junit_conformance.xml: Machine-readable test log (from the container kubeedge/nodeconformance).
+vX.Y/$dir/e2e.log: Test log output (from the container kubeedge/nodeconformance:v1.23.1).
+vX.Y/$dir/junit_conformance.xml: Machine-readable test log (from the container kubeedge/nodeconformance:v1.23.1).
 vX.Y/$dir/PRODUCT.yaml: See below.
 ```
 
